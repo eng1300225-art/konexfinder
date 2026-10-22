@@ -84,8 +84,8 @@ export const ApiDiagnosticsModal: React.FC<ApiDiagnosticsModalProps> = ({ isOpen
                 <span className="text-slate-300">opendart.fss.or.kr</span>
               </div>
               <div>
-                <span className="text-slate-500 block">인증키 (Auth Key)</span>
-                <span className="text-slate-300">{diagnostics?.dart.authKeyConfigured ? '환경변수 연동됨' : '미설정'}</span>
+                <span className="text-slate-500 block">인증 상태</span>
+                <span className="text-slate-300">{diagnostics?.dart.authKeyConfigured ? '보안 연동 완료' : '미설정'}</span>
               </div>
               <div>
                 <span className="text-slate-500 block">최근 응답 시각</span>
@@ -114,8 +114,8 @@ export const ApiDiagnosticsModal: React.FC<ApiDiagnosticsModalProps> = ({ isOpen
                 <span className="text-slate-300">data-dbg.krx.co.kr</span>
               </div>
               <div>
-                <span className="text-slate-500 block">인증키 (AUTH_KEY)</span>
-                <span className="text-slate-300">{diagnostics?.krx.authKeyConfigured ? '환경변수 연동됨' : '미설정'}</span>
+                <span className="text-slate-500 block">인증 상태</span>
+                <span className="text-slate-300">{diagnostics?.krx.authKeyConfigured ? '보안 연동 완료' : '미설정'}</span>
               </div>
               <div>
                 <span className="text-slate-500 block">시세 동기화 대상</span>

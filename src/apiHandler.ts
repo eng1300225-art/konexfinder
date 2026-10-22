@@ -399,7 +399,7 @@ apiApp.get('/api/diagnostics', async (req: Request, res: Response) => {
       status: krxResult.success ? 'connected' : (KRX_API_KEY ? 'auth_required' : 'fallback'),
       endpoint: 'https://data-dbg.krx.co.kr/svc/apis/sto/knx_bydd_trd',
       authKeyConfigured: Boolean(KRX_API_KEY),
-      authKeyPreview: KRX_API_KEY ? '설정 완료 (process.env)' : '미설정',
+      authKeyPreview: KRX_API_KEY ? '보안 연동 완료' : '미설정',
       message: krxResult.message,
       lastPing: new Date().toLocaleTimeString('ko-KR')
     },
@@ -407,7 +407,7 @@ apiApp.get('/api/diagnostics', async (req: Request, res: Response) => {
       status: DART_API_KEY ? 'connected' : 'error',
       endpoint: 'https://opendart.fss.or.kr/api',
       authKeyConfigured: Boolean(DART_API_KEY),
-      authKeyPreview: DART_API_KEY ? '설정 완료 (process.env)' : '미설정',
+      authKeyPreview: DART_API_KEY ? '보안 연동 완료' : '미설정',
       message: DART_API_KEY
         ? '정상 (000) - 전자공시 기업개요 및 최근 공시 목록 실시간 수신 완료'
         : 'DART_API_KEY 환경변수가 설정되지 않아 기본 검증 데이터로 대체 운용 중입니다.',

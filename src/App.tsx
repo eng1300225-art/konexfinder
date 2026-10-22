@@ -435,10 +435,6 @@ export default function App() {
               <span>대상 기업: <strong className="text-slate-300 font-medium">코넥스 시가총액 상위 10개사</strong></span>
               <span>·</span>
               <span>
-                제작자: <strong className="text-slate-200 font-medium">하준우</strong>
-              </span>
-              <span>·</span>
-              <span>
                 문의: <a href="mailto:junwha225@naver.com" className="text-blue-400 hover:text-blue-300 underline underline-offset-2 transition-colors">junwha225@naver.com</a>
               </span>
             </div>
