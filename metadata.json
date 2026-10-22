@@ -1,0 +1,8 @@
+{
+  "name": "KONEX Finder - 코넥스 시총 TOP 10 DART·KRX 분석기",
+  "description": "한국거래소(KRX) 실시간 시세 API와 금융감독원 전자공시(DART) Open API, 구글 뉴스 실시간 크롤링을 연동한 코넥스 시가총액 상위 10개사 가치평가 및 6대 재무건전성 분석 플랫폼",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
