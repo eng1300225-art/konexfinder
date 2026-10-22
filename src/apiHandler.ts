@@ -9,9 +9,9 @@ dotenv.config();
 export const apiApp = express();
 apiApp.use(express.json());
 
-// API Keys configured from user approved credentials
-const DART_API_KEY = process.env.DART_API_KEY || '88508090bfa016317250dc313242c907c69118b3';
-const KRX_API_KEY = process.env.KRX_API_KEY || '836F71E446594635AF66B905317178576BC606D7';
+// API Keys configured strictly from environment variables (process.env)
+const DART_API_KEY = process.env.DART_API_KEY?.trim() || '';
+const KRX_API_KEY = process.env.KRX_API_KEY?.trim() || '';
 const geminiApiKey = process.env.GEMINI_API_KEY;
 
 let aiClient: GoogleGenAI | null = null;
@@ -315,6 +315,12 @@ async function fetchCandleSeries(code: string, count: number = 30): Promise<Char
 }
 
 async function queryKrxQuote(code: string): Promise<{ success: boolean; data?: any; message: string }> {
+  if (!KRX_API_KEY) {
+    return {
+      success: false,
+      message: 'KRX_API_KEY 환경변수가 설정되지 않아 실시간 호가/시세 동기화 피드로 안전하게 대체 운용 중입니다.'
+    };
+  }
   try {
     const url = `https://data-dbg.krx.co.kr/svc/apis/sto/knx_bydd_trd?basDd=${new Date().toISOString().substring(0, 10).replace(/-/g, '')}`;
     const controller = new AbortController();
@@ -390,19 +396,21 @@ apiApp.get('/api/diagnostics', async (req: Request, res: Response) => {
 
   const diagnostics: ApiDiagnostics = {
     krx: {
-      status: krxResult.success ? 'connected' : 'auth_required',
+      status: krxResult.success ? 'connected' : (KRX_API_KEY ? 'auth_required' : 'fallback'),
       endpoint: 'https://data-dbg.krx.co.kr/svc/apis/sto/knx_bydd_trd',
       authKeyConfigured: Boolean(KRX_API_KEY),
-      authKeyPreview: KRX_API_KEY ? `${KRX_API_KEY.substring(0, 8)}...${KRX_API_KEY.substring(KRX_API_KEY.length - 4)}` : '미설정',
+      authKeyPreview: KRX_API_KEY ? '설정 완료 (process.env)' : '미설정',
       message: krxResult.message,
       lastPing: new Date().toLocaleTimeString('ko-KR')
     },
     dart: {
-      status: 'connected',
+      status: DART_API_KEY ? 'connected' : 'error',
       endpoint: 'https://opendart.fss.or.kr/api',
       authKeyConfigured: Boolean(DART_API_KEY),
-      authKeyPreview: DART_API_KEY ? `${DART_API_KEY.substring(0, 8)}...${DART_API_KEY.substring(DART_API_KEY.length - 4)}` : '미설정',
-      message: '정상 (000) - 전자공시 기업개요 및 최근 공시 목록 실시간 수신 완료',
+      authKeyPreview: DART_API_KEY ? '설정 완료 (process.env)' : '미설정',
+      message: DART_API_KEY
+        ? '정상 (000) - 전자공시 기업개요 및 최근 공시 목록 실시간 수신 완료'
+        : 'DART_API_KEY 환경변수가 설정되지 않아 기본 검증 데이터로 대체 운용 중입니다.',
       lastPing: new Date().toLocaleTimeString('ko-KR')
     },
     googleNews: {

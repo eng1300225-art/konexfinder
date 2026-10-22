@@ -1,8 +1,18 @@
+# Dependencies
 node_modules/
+
+# Production builds
 build/
 dist/
+
+# Test coverage & logs
 coverage/
-.DS_Store
 *.log
-.env*
+.DS_Store
+
+# Environment variables (Never commit sensitive keys)
+.env
+.env.local
+.env.*.local
+.env.*
 !.env.example
